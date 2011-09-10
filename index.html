@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name = "viewport" id="viewport">
+<title>360</title>
+<style>
+body{
+	padding:100px 0px 0px 100px;
+}
+
+
+
+</style>
+<script src="javascript/jquery-1.4.4.min.js"></script>
+<script src="javascript/Rotate360.js"></script>
+</head>
+
+<body>
+<div id="frame360">
+    <img src="tight 60/360 tight_00000.jpg" id="image360" />
+</div>
+<div id="loadingFeedback">Loading...</div>
+<input id="degreesButton" type="button" value="Rotate To"  /><input id="degreesField" type="text" value="0" /><input id="rotateLeftButton" value="<<" type="button"  /><input id="rotateRightButton" value=">>" type="button"  />
+<script>
+ $(document).ready(function(){
+	 
+	 var options = {
+		imageElement:$("#image360").get(0),
+		interactiveElement:$('#frame360').get(0),
+	 	numberOfFrames: 129,
+	 	imageBaseURLStart: "tight 60/360 tight_",
+	 	imageBaseURLEnd: ".jpg",
+		imageSequenceNumberPadding: 5,
+		rotateToSeconds:0.5
+	 }
+	 
+	var rotate360 = new Rotate360(options);
+	rotate360.preload(function(){
+		$('#loadingFeedback').css('opacity','0');
+		//rotate360.startAutoPlay();
+	});
+	
+	$('#degreesButton').bind('click',function(){
+		rotate360.scrollToDegrees($('#degreesField').val());
+	});
+	
+	$('#rotateLeftButton').bind('mousedown',function(){
+		rotate360.play(-2);
+		$(document).bind('mouseup',function(){
+			rotate360.stop();
+		});
+	});
+	
+	$('#rotateRightButton').bind('mousedown',function(){
+		rotate360.play(2);
+		$(document).bind('mouseup',function(){
+			rotate360.stop();
+		});
+	});
+	
+	$('#rotateLeftButton').bind('touchstart',function(){
+		rotate360.play(-2);
+		$(document).bind('touchend',function(){
+			rotate360.stop();
+		});
+	});
+	
+	$('#rotateRightButton').bind('touchstart',function(){
+		rotate360.play(2);
+		$(document).bind('touchend',function(){
+			rotate360.stop();
+		});
+	});
+	
+	
+	
+ });
+</script>
+</body>
+</html>
