@@ -195,7 +195,7 @@ Rotate360.prototype.loadImagesComplete = function(){
 	//this.hideSpinners();
 	//this.imageElement.style.display = "block";
 	this.activate();
-	this.dispatchEvent('loadImagesComplete');
+	this.dispatchEvent(new Rotate360Event('loadImagesComplete'));
 	if(this._preloadCallBack !== undefined)this._preloadCallBack();
 };
 
@@ -415,7 +415,7 @@ Rotate360.prototype.updateTween = function(){
 };
 
 Rotate360.prototype.scrollToDegreesComplete = function(){
-	this.dispatchEvent('scrollToDegreesComplete');
+	this.dispatchEvent(new Rotate360Event('scrollToDegreesComplete'));
 };
 
 Rotate360.prototype.startAutoPlay = function(){
@@ -455,7 +455,7 @@ Rotate360.prototype.setDegrees = function(degree){
 	this._currentImageIndex = this.convertDegreesToFrames(this._currentDegree);
 	this.imageElement.src = this.images[this._currentImageIndex].src;//non explorer I think
 	//console.log('degrees:'+this._currentDegree+' imageIndex:'+this._currentImageIndex);
-	
+	this.dispatchEvent(new Rotate360Event(Rotate360Event.SET_DEGREES));
 }
 
 Rotate360.prototype.scrubDegrees = function(relativeDegrees){
@@ -503,7 +503,7 @@ Rotate360.prototype.scrubDegrees = function(relativeDegrees){
 	*/
 	
 	this.setDegrees(this._scrubDestinationDegree);
-	this.dispatchEvent('scrubDegrees');
+	//this.dispatchEvent(new Rotate360Event(Rotate360Event.SCRUB_DEGREES));
 };
 
 Rotate360.prototype.scrollToDegrees = function(absolutenDegrees){
@@ -516,7 +516,23 @@ Rotate360.prototype.scrollToDegrees = function(absolutenDegrees){
 	
 };
 
+Rotate360.prototype.getDegrees = function(){
+	return this._currentDegree;
+}
+
 Rotate360.prototype.preload = function(callBack){
 	this._preloadCallBack = callBack;
 	this.loadImages();
 }
+
+
+//EVENT
+//_____________________________________________________________________
+var Rotate360Event = function(eventType){
+	this.eventType = eventType; 
+};
+Rotate360Event.SET_DEGREES = "setDegrees";
+Rotate360Event.SCRUB_DEGREES = "scrubDegrees";
+Rotate360Event.SCROLL_TO_DEGREES_COMPLETE = "scrollToDegreesComplete";
+Rotate360Event.LOAD_IMAGES_COMPLETE = "loadImagesComplete";
+

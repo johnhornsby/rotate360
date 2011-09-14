@@ -9,10 +9,27 @@ body{
 	padding:100px 0px 0px 100px;
 }
 
+.rotate360SrubberTrack {
+	width:300px;
+	border-top:1px solid black;
+	height:0px;
+	margin:20px;
+}
+
+.rotate360Srubber {
+	width:40px;
+	height:10px;
+	position:relative;
+	background:#F00;
+	left:0px;
+	top:-5px;
+	cursor:pointer;
+}
 
 
 </style>
 <script src="javascript/jquery-1.4.4.min.js"></script>
+<script src="javascript/Rotate360ScrubberViewController.js"></script>
 <script src="javascript/Rotate360.js"></script>
 </head>
 
@@ -20,10 +37,15 @@ body{
 <div id="frame360">
     <img src="tight 60/360 tight_00000.jpg" id="image360" />
 </div>
+<div class="rotate360SrubberTrack">
+	<div class="rotate360Srubber"></div>
+</div>
 <div id="loadingFeedback">Loading...</div>
 <input id="degreesButton" type="button" value="Rotate To"  /><input id="degreesField" type="text" value="0" /><input id="rotateLeftButton" value="<<" type="button"  /><input id="rotateRightButton" value=">>" type="button"  />
 <script>
  $(document).ready(function(){
+	 
+	 
 	 
 	 var options = {
 		imageElement:$("#image360").get(0),
@@ -40,6 +62,13 @@ body{
 		$('#loadingFeedback').css('opacity','0');
 		//rotate360.startAutoPlay();
 	});
+	
+	var scrubberOptions = {
+		trackElement:$('.rotate360SrubberTrack').get(0),
+		scrubberElement:$('.rotate360Srubber').get(0),
+		rotate360:rotate360
+	 }
+	 var rotate360ScrubberViewController = new Rotate360ScrubberViewController(scrubberOptions);
 	
 	$('#degreesButton').bind('click',function(){
 		rotate360.scrollToDegrees($('#degreesField').val());
@@ -72,6 +101,8 @@ body{
 			rotate360.stop();
 		});
 	});
+	
+	
 	
 	
 	
