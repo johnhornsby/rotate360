@@ -223,14 +223,8 @@ Rotate360.prototype.hideSpinners = function(){
 //PRIVATE INTERACTIVITY
 //____________________________________________________________________________________________________
 Rotate360.prototype.activate = function(){
-	//addEvent(this._interactiveElement,'touchstart',this.onTouchStart.rEvtContext(this));
-	//addEvent(this._interactiveElement,'mousedown',this.onMouseDown.rEvtContext(this));
-	//this._interactiveElement.addEventListener('mousedown', this.onMouseDown.rEvtContext(this), false);//use bubbling, as hotspots and buttons use capture 
-	
-	
 	$(this._interactiveElement).bind('mousedown', this.onMouseDown.rEvtContext(this));
 	$(this._interactiveElement).bind('touchstart', this.onTouchStart.rEvtContext(this));
-	
 };
 
 Rotate360.prototype.deactivate = function(){
