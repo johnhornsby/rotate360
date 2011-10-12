@@ -117,7 +117,8 @@ var Rotate360 = function(options){
 	this.imageElement = options.imageElement//$('#'+options.imageElement).get(0);
 	this._interactiveElement = options.interactiveElement//$('#'+options.interactiveElement).get(0);
 	this._imageSequenceNumberPadding = options.imageSequenceNumberPadding;
-	this._rotateToTime = options.rotateToSeconds || 1; 
+	this._rotateToTime = (options.rotateToSeconds !== undefined)?options.rotateToSeconds:1;
+	this._loop = (options.loop !== undefined)?options.loop:true;
 	this.startX;
 	this.startY;
 	this._currentDegree = 0;
@@ -395,6 +396,16 @@ Rotate360.prototype.convertIntegerToFormattedString = function (int,length){
 }
 
 Rotate360.prototype.validateDegrees = function(sourceDegrees){
+	if(this._loop === false){
+		if(sourceDegrees > 360){
+			sourceDegrees = 360;
+		}
+		if(sourceDegrees < 0){
+			sourceDegrees = 0;
+		}
+		console.log('validateDegrees sourcedegrees: '+sourceDegrees);
+	}
+	
 	var validDegress = sourceDegrees;
 	if(sourceDegrees > 360){
 	   validDegress = 0  + (sourceDegrees - 360) + -1;
@@ -441,7 +452,9 @@ Rotate360.prototype.stop = function(){
 	this.stopAutoPlay();
 }
 
-
+/**
+* 
+*/
 Rotate360.prototype.setDegrees = function(degree){
 	degree = this.validateDegrees(degree);
 	this._currentDegree = degree;
