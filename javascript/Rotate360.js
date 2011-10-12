@@ -403,7 +403,7 @@ Rotate360.prototype.validateDegrees = function(sourceDegrees){
 		if(sourceDegrees < 0){
 			sourceDegrees = 0;
 		}
-		console.log('validateDegrees sourcedegrees: '+sourceDegrees);
+		//console.log('validateDegrees sourcedegrees: '+sourceDegrees);
 	}
 	
 	var validDegress = sourceDegrees;
