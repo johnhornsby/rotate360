@@ -55,7 +55,7 @@ Rotate360ScrubberViewController.prototype.onMouseDown = function(e){
 };
 
 Rotate360ScrubberViewController.prototype.onMouseMove = function(e){
-	var trackX = this._track.offsetLeft;
+	var trackX = $(this._track).offset().left;	//get page left
 	var pageX;
 	
 	var eventType = (e.type.indexOf('touch')!=-1)?'touch':'mouse';

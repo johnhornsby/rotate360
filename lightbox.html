@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name = "viewport" id="viewport">
+<title>360</title>
+<style>
+body{
+	padding:100px 0px 0px 100px;
+}
+
+#container {
+	position:relative;
+	left:50px;
+	margin-left:50px;
+	background-color:#333;	
+}
+
+.rotate360SrubberTrack {
+	width:300px;
+	border-top:1px solid black;
+	height:0px;
+	margin:20px;
+}
+
+.rotate360Srubber {
+	width:40px;
+	height:10px;
+	position:relative;
+	background:#F00;
+	left:0px;
+	top:-5px;
+	cursor:pointer;
+}
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+<script src="javascript/Rotate360ScrubberViewController.js"></script>
+<script src="javascript/Rotate360.js"></script>
+</head>
+
+<body>
+<div id="container">
+    <div id="frame360">
+        <img src="tight 60/360 tight_00000.jpg" id="image360" />
+    </div>
+    <div class="rotate360SrubberTrack">
+        <div class="rotate360Srubber"></div>
+    </div>
+    <div id="loadingFeedback">Loading...</div>
+<input id="degreesButton" type="button" value="Rotate To"  /><input id="degreesField" type="text" value="0" /><input id="rotateLeftButton" value="<<" type="button"  /><input id="rotateRightButton" value=">>" type="button"  />
+</div>
+
+<script>
+ $(document).ready(function(){
+	 
+	 
+	 
+	 var options = {
+		imageElement:$("#image360").get(0),
+		interactiveElement:$('#frame360').get(0),
+	 	numberOfFrames: 129,
+	 	imageBaseURLStart: "tight 60/360 tight_",
+	 	imageBaseURLEnd: ".jpg",
+		imageSequenceNumberPadding: 5,
+		rotateToSeconds:0.5,
+		loop:false
+	 }
+	 
+	var rotate360 = new Rotate360(options);
+	rotate360.preload(function(){
+		$('#loadingFeedback').css('opacity','0');
+		//rotate360.startAutoPlay();
+	});
+	
+	var scrubberOptions = {
+		trackElement:$('.rotate360SrubberTrack').get(0),
+		scrubberElement:$('.rotate360Srubber').get(0),
+		rotate360:rotate360
+	 }
+	 var rotate360ScrubberViewController = new Rotate360ScrubberViewController(scrubberOptions);
+	
+	$('#degreesButton').bind('click',function(){
+		rotate360.scrollToDegrees($('#degreesField').val());
+	});
+	
+	$('#rotateLeftButton').bind('mousedown',function(){
+		rotate360.play(-2);
+		$(document).bind('mouseup',function(){
+			rotate360.stop();
+		});
+	});
+	
+	$('#rotateRightButton').bind('mousedown',function(){
+		rotate360.play(2);
+		$(document).bind('mouseup',function(){
+			rotate360.stop();
+		});
+	});
+	
+	$('#rotateLeftButton').bind('touchstart',function(){
+		rotate360.play(-2);
+		$(document).bind('touchend',function(){
+			rotate360.stop();
+		});
+	});
+	
+	$('#rotateRightButton').bind('touchstart',function(){
+		rotate360.play(2);
+		$(document).bind('touchend',function(){
+			rotate360.stop();
+		});
+	});
+	
+	
+	
+	
+	
+ });
+</script>
+</body>
+</html>
